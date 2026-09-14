@@ -1,294 +1,415 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { motion } from "motion/react";
-import { ImageWithFallback } from "../components/figma/ImageWithFallback";
-import {
-  Coffee,
-  Music,
-  Palette,
-  Trophy,
-  Users,
-  Heart,
-  Camera,
-  Clock,
-} from "lucide-react";
+import { ChevronRight } from "lucide-react";
+
+// Campus Life Assets (Figma Node 833-932)
+import clubDefaultImg from "../../assets/campus-life/club-default.png";
+
+// SVG Icons
+import iconGraduate from "../../assets/campus-life/icon-graduate.svg";
+import iconCardChecklist from "../../assets/campus-life/icon-card-checklist.svg";
+import iconFamilyRestroom from "../../assets/campus-life/icon-family-restroom.svg";
+import iconHeadGear from "../../assets/campus-life/icon-head-gear.svg";
+import iconBook from "../../assets/campus-life/icon-book.svg";
+import iconBlueprintPap from "../../assets/campus-life/icon-blueprint-pap.svg";
+
+// Schedule Data (#837:1273)
+const dailySchedule = [
+  { time: "Before 7:00 AM", activity: "Students arrive on campus open" },
+  { time: "7:10-7:30 AM", activity: "DEAR Time" },
+  { time: "7:30 AM", activity: "Classes begin" },
+  { time: "7:30-11:30 AM", activity: "Morning classes" },
+  { time: "11:30 AM-1:00 PM", activity: "Lunch break" },
+  { time: "1:00-4:00 PM", activity: "Afternoon classes" },
+  {
+    time: "After 4:00 PM",
+    activity: "Tutoring, office hours, clubs, sport, and enrichment activities",
+  },
+];
+
+// Campus Highlights Data (#833:960)
+const campusHighlights = [
+  {
+    icon: iconGraduate,
+    title: "Modern Learning Spaces",
+    desc: "Purpose-built classrooms for focused study, collaboration, and active learning.",
+  },
+  {
+    icon: iconCardChecklist,
+    title: "Science & Innovation Laboratories",
+    desc: "Hands-on spaces for inquiry, experimentation, and discovery.",
+  },
+  {
+    icon: iconFamilyRestroom,
+    title: "Library & Learning Resource Centre",
+    desc: "A calm, well-resourced setting for reading, research, and independent study.",
+  },
+  {
+    icon: iconFamilyRestroom,
+    title: "Student Commons & Collaboration Areas",
+    desc: "Shared spaces where students can exchange ideas, work together, and build community.",
+  },
+  {
+    icon: iconFamilyRestroom,
+    title: "Health Centre & Canteen",
+    desc: "Essential services that support student health, comfort, and daily wellbeing.",
+  },
+];
+
+// Student Activities & Clubs (#917:2275)
+const studentClubs = [
+  {
+    icon: iconHeadGear,
+    title: "Speech & Debate Club — Find your voice. Sharpen your thinking.",
+    desc: "Students practise public speaking, research, and structured argument. The club builds confidence, critical thinking, and persuasive communication, and offers a pathway for students interested in Model United Nations.",
+  },
+  {
+    icon: iconBook,
+    title:
+      "Reading & English Conversation Club — Read widely. Speak with confidence.",
+    desc: "Students read fiction and non-fiction, build vocabulary, and discuss ideas in English. Guided discussion and presentations help them develop clear, fluent expression.",
+  },
+  {
+    icon: iconBlueprintPap,
+    title: "English Music Club — Where language meets creativity and culture.",
+    desc: "Students explore music in English as a way to strengthen listening, interpret lyrics, discover new cultures, and understand how stories and ideas are expressed through sound.",
+  },
+  {
+    icon: iconBlueprintPap,
+    title: "Student Entrepreneurship Club — Where ideas become action.",
+    desc: "Students investigate local markets, ethical business, and entrepreneurship through projects, field visits, guest speakers, and group problem-solving. They learn how ideas, resources, and supply chains work in the real world.",
+  },
+  {
+    icon: iconBlueprintPap,
+    title: "Robotics Club — Build, test, and imagine.",
+    desc: "Students explore electronics, coding, and engineering through hands-on projects using tools such as Arduino. Working in teams, they design, build, troubleshoot, and learn from each attempt.",
+  },
+  {
+    icon: iconBlueprintPap,
+    title: "Game Design Club — From player to designer.",
+    desc: "Students look beyond gameplay to understand concept development, mechanics, storytelling, and production. They work together to design original games while building creativity, logic, and collaboration.",
+  },
+  {
+    icon: iconBlueprintPap,
+    title: "Media Club — Tell stories through photography and film.",
+    desc: "Students learn visual storytelling, from framing and composition to filming and editing. They develop technical skills and use images and film to communicate ideas with purpose.",
+  },
+  {
+    icon: iconBlueprintPap,
+    title: "Creative Writing Club — Where stories come to life.",
+    desc: "Students experiment with poetry, short fiction, creative nonfiction, and scripts. Prompts, workshops, and peer feedback help them strengthen craft, originality, and voice.",
+  },
+  {
+    icon: iconBlueprintPap,
+    title: "Performing Arts Club — Culture, movement, and creativity on stage.",
+    desc: "Through singing, dance, and traditional Khmer performance, students build confidence, discipline, stage presence, and appreciation for the stories carried through the arts.",
+  },
+  {
+    icon: iconBlueprintPap,
+    title: "Movie Club — Watch closely. Think deeply.",
+    desc: "Students view carefully selected films from different genres and cultures, then take part in guided discussions and reflective activities that connect cinematic stories with wider ideas.",
+  },
+  {
+    icon: iconBlueprintPap,
+    title: "Sports Club — Teamwork, discipline, and school spirit in motion.",
+    desc: "Football, volleyball, and badminton offer students structured opportunities to stay active, improve skills, compete, and develop resilience and teamwork.",
+  },
+  {
+    icon: iconBlueprintPap,
+    title: "Tutoring Club — Knowledge grows when it is shared.",
+    desc: "Students who are strong in particular subjects support peers through structured tutoring. Tutors deepen their own understanding while developing patience, leadership, and communication.",
+  },
+  {
+    icon: iconBlueprintPap,
+    title: "Student Community Service — Responsibility and care in action.",
+    desc: "Students contribute to the school through shared responsibilities and service activities. Working together helps them develop accountability, respect, teamwork, and pride in their community.",
+  },
+];
+
+// College & Career Readiness (#918:2569)
+const readinessItems = [
+  {
+    title: "Parent Engagement & Partnership",
+    desc: "Parents and guardians are valued partners in each student’s education. CCC maintains open communication, shares important information, and encourages families to stay involved while students learn to take ownership of their progress.",
+  },
+  {
+    title: "School-Community Collaboration",
+    desc: "CCC works with families, local leaders, and community stakeholders through meetings, events, and joint initiatives that strengthen trust, cooperation, and long-term impact.",
+  },
+  {
+    title: "Cultural & Community Events",
+    desc: "Family Day, school celebrations, and cultural activities create opportunities for connection and help sustain the values shared across the CCC community.",
+  },
+  {
+    title: "Student Leadership, Service & Volunteering",
+    desc: "Students take part in structured service and student-led initiatives that build empathy, responsibility, teamwork, and the belief that leadership begins with contribution.",
+  },
+  {
+    title: "Student Gardening Programme",
+    desc: "Through supervised gardening, students develop practical skills, care for their environment, and learn about sustainability, patience, responsibility, and teamwork.",
+  },
+  {
+    title: "Learning Beyond the Classroom",
+    desc: "Service and community engagement help students understand the effect of their choices and the value of contributing to something larger than themselves.",
+  },
+];
 
 export function CampusLife() {
   return (
-    <div className="pt-24 flex flex-col">
-      {/* Header */}
-      <section className="bg-[#182B70] text-white py-20 px-6">
-        <div className="max-w-7xl mx-auto">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-6xl font-bold mb-6"
+    <div className="flex flex-col font-sora bg-white text-[#25252A] overflow-hidden pt-20 md:pt-24">
+      {/* 1. Breadcrumbs (#833:1051) */}
+      <section className="w-full max-w-[1512px] mx-auto px-6 md:px-12 lg:px-[152px] pt-4 pb-2">
+        <nav
+          aria-label="Breadcrumb"
+          className="flex items-center gap-1.5 text-xs text-[#66666E]"
+        >
+          <Link
+            to="/home"
+            className="hover:text-[#182B70] transition-colors font-normal"
           >
-            Campus Life
-          </motion.h1>
-          <p className="text-white/80 text-xl max-w-3xl leading-relaxed">
-            Experience a vibrant, supportive, and active community where
-            students create lasting memories and friendships.
-          </p>
-        </div>
+            Home
+          </Link>
+          <ChevronRight size={14} className="text-[#66666E]" />
+          <span className="text-[#182B70] font-bold">Campus Life</span>
+        </nav>
       </section>
 
-      {/* Daily Life Section */}
-      <section className="py-24 px-6 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div className="space-y-8">
-              <h2 className="text-[#182B70] text-4xl font-bold">
-                A Day in the Life
-              </h2>
-              <p className="text-gray-600 text-lg">
-                Life at Chea Chanto College is balanced between academic rigor
-                and personal growth. Our daily schedule is designed to optimize
-                learning while providing ample time for reflection, sports, and
-                social interaction.
-              </p>
-
-              <div className="space-y-6">
-                {[
-                  {
-                    time: "08:00 AM",
-                    event: "Morning Assembly & Reflections",
-                    icon: Clock,
-                  },
-                  {
-                    time: "08:30 AM",
-                    event: "Core Academic Sessions",
-                    icon: Coffee,
-                  },
-                  {
-                    time: "12:30 PM",
-                    event: "Communal Lunch & Socializing",
-                    icon: Users,
-                  },
-                  {
-                    time: "02:30 PM",
-                    event: "Electives & Extracurricular Activities",
-                    icon: Music,
-                  },
-                  {
-                    time: "04:30 PM",
-                    event: "Campus Clubs & Sports",
-                    icon: Trophy,
-                  },
-                ].map((item, idx) => (
-                  <div
-                    key={idx}
-                    className="flex items-center gap-6 p-4 rounded-2xl bg-gray-50 border border-gray-100 hover:border-[#182B70]/20 transition-all"
-                  >
-                    <div className="w-12 h-12 bg-[#182B70] text-white rounded-full flex items-center justify-center shrink-0">
-                      <item.icon size={20} />
-                    </div>
-                    <div>
-                      <div className="text-xs font-bold text-[#182B70] uppercase tracking-widest">
-                        {item.time}
-                      </div>
-                      <div className="font-bold text-gray-800">
-                        {item.event}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-4">
-                <ImageWithFallback
-                  src="https://images.unsplash.com/photo-1747947901869-8a09ca01f4a0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoaWdoJTIwc2Nob29sJTIwc3R1ZGVudHMlMjBsYXVnaGluZyUyMGluJTIwaGFsbHdheXxlbnwxfHx8fDE3NzAzNjUwMjd8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-                  alt="Students 1"
-                  className="rounded-3xl aspect-[3/4] object-cover shadow-lg"
-                />
-                <ImageWithFallback
-                  src="https://images.unsplash.com/photo-1760062744828-64801c56a039?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkaXZlcnNlJTIwc3R1ZGVudHMlMjBzdHVkeWluZyUyMGluJTIwbW9kZXJuJTIwbGlicmFyeXxlbnwxfHx8fDE3NzAzNjUwMjd8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-                  alt="Students 2"
-                  className="rounded-3xl aspect-square object-cover shadow-lg"
-                />
-              </div>
-              <div className="space-y-4 pt-8">
-                <ImageWithFallback
-                  src="https://images.unsplash.com/photo-1563299967-5208dc3f5d19?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzY2hvb2wlMjBiYXNrZXRiYWxsJTIwY291cnQlMjBjYW1wdXN8ZW58MXx8fHwxNzcwMzY1MDI4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-                  alt="Students 3"
-                  className="rounded-3xl aspect-square object-cover shadow-lg"
-                />
-                <ImageWithFallback
-                  src="https://images.unsplash.com/photo-1759092912891-9f52486bb059?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBzY2llbmNlJTIwbGFib3JhdG9yeSUyMHNjaG9vbHxlbnwxfHx8fDE3NzAzNjUwMjh8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-                  alt="Students 4"
-                  className="rounded-3xl aspect-[3/4] object-cover shadow-lg"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Clubs & Activities */}
-      <section className="py-24 px-6 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-[#182B70] text-4xl font-bold mb-4">
-              Student Activities & Clubs
-            </h2>
-            <p className="text-gray-500 text-xl max-w-2xl mx-auto">
-              Explore your passions beyond the classroom.
+      {/* 2. Life at Chea Chanto College (#833:933) */}
+      <section className="w-full max-w-[1512px] mx-auto px-6 md:px-12 lg:px-[152px] pt-8 md:pt-12 pb-0">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="space-y-4"
+        >
+          <h1 className="text-[#182B70] text-3xl sm:text-4xl lg:text-[32px] font-bold leading-tight lg:leading-[40px] tracking-tight">
+            Life at Chea Chanto College
+          </h1>
+          <div className="text-[#25252A] text-sm sm:text-base lg:text-[15px] font-normal leading-relaxed lg:leading-[22px] max-w-[1208px] space-y-3">
+            <p>
+              A day at CCC is carefully structured, but never one-dimensional.
+              Students move through a full academic programme, then have time
+              for tutoring, clubs, sport, creative work, and other enrichment
+              activities. The rhythm of the day builds focus and discipline
+              while leaving room for curiosity, friendship, and personal growth.
+            </p>
+            <p>
+              Just as important is the culture around that schedule. CCC is a
+              place where students can ask questions, test ideas, make mistakes,
+              and challenge themselves within a community that believes in their
+              potential.
             </p>
           </div>
+        </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              {
-                name: "STEM Innovators",
-                desc: "Robotics, coding, and scientific research competitions.",
-                icon: Palette,
-              },
-              {
-                name: "Arts & Culture",
-                desc: "Traditional Khmer dance, painting, and music ensemble.",
-                icon: Music,
-              },
-              {
-                name: "Eco Warriors",
-                desc: "Leading sustainability and environmental campus projects.",
-                icon: Heart,
-              },
-              {
-                name: "Sports Academy",
-                desc: "Basketball, football, and track & field excellence.",
-                icon: Trophy,
-              },
-            ].map((club, idx) => (
+        {/* Schedule Sub-block (#837:1264) */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="mt-8 space-y-4"
+        >
+          <h2 className="text-[#25252A] text-lg sm:text-xl lg:text-[20px] font-bold leading-snug lg:leading-[25px]">
+            A Typical School Day
+          </h2>
+
+          <div className="w-full max-w-[1120px] rounded-2xl border border-[#D8D8DA] overflow-hidden">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="bg-[#25252A] text-white">
+                  <th className="py-4 px-6 font-normal text-sm md:text-[15px] leading-[19px] w-1/2">
+                    Time
+                  </th>
+                  <th className="py-4 px-6 font-normal text-sm md:text-[15px] leading-[19px] w-1/2">
+                    Activity
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[#D8D8DA] bg-white">
+                {dailySchedule.map((item) => (
+                  <tr
+                    key={item.time}
+                    className="hover:bg-gray-50/50 transition-colors"
+                  >
+                    <td className="py-4 px-6 text-sm md:text-[15px] leading-[19px] text-[#25252A]">
+                      {item.time}
+                    </td>
+                    <td className="py-4 px-6 text-sm md:text-[15px] leading-[19px] text-[#25252A]">
+                      {item.activity}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </motion.div>
+
+        {/* Office Hours Sub-block (#837:1342) */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="mt-8 space-y-2"
+        >
+          <h2 className="text-[#25252A] text-lg sm:text-xl lg:text-[20px] font-bold leading-snug lg:leading-[25px] uppercase">
+            OFFICE HOURS
+          </h2>
+          <p className="text-[#25252A] text-sm sm:text-base lg:text-[15px] font-normal leading-relaxed lg:leading-[19px]">
+            Students can meet teachers for additional guidance and academic
+            support outside regular class time.
+          </p>
+        </motion.div>
+      </section>
+
+      {/* 3. Campus Highlights (#833:958) */}
+      <section className="w-full max-w-[1512px] mx-auto px-6 md:px-12 lg:px-[152px] pt-16 md:pt-24 pb-0">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="space-y-4"
+        >
+          <h2 className="text-[#182B70] text-3xl sm:text-4xl lg:text-[32px] font-bold leading-tight lg:leading-[40px] tracking-tight">
+            Campus Highlights
+          </h2>
+          <p className="text-[#25252A] text-sm sm:text-base lg:text-[15px] font-normal leading-relaxed lg:leading-[22px] max-w-[1208px]">
+            Every part of the CCC campus is designed to support learning,
+            connection, and wellbeing. From laboratories and classrooms to open
+            communal spaces and quiet places to study, students learn in an
+            environment that respects their ambitions and gives them room to
+            grow.
+          </p>
+        </motion.div>
+
+        {/* Highlights Items (#833:960) */}
+        <div className="mt-8 space-y-8">
+          {campusHighlights.map((item, idx) => (
+            <motion.div
+              key={item.title}
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: idx * 0.05 }}
+              className="space-y-4 max-w-[1208px]"
+            >
+              <div className="flex items-center gap-2.5">
+                <img
+                  src={item.icon}
+                  alt=""
+                  className="w-8 h-8 shrink-0 object-contain"
+                />
+                <h3 className="text-[#25252A] text-lg sm:text-xl lg:text-[20px] font-bold leading-snug lg:leading-[25px]">
+                  {item.title}
+                </h3>
+              </div>
+              <p className="text-[#66666E] text-sm sm:text-base lg:text-[15px] font-normal leading-relaxed lg:leading-[19px]">
+                {item.desc}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* 4. Student Activities & Clubs (#917:2271) */}
+      <section className="w-full bg-[#EEF0F7] py-16 md:py-20 mt-16 md:mt-24">
+        <div className="w-full max-w-[1512px] mx-auto px-6 md:px-12 lg:px-[152px]">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="space-y-4"
+          >
+            <h2 className="text-[#182B70] text-3xl sm:text-4xl lg:text-[32px] font-bold leading-tight lg:leading-[40px] tracking-tight">
+              Student Activities & Clubs
+            </h2>
+            <p className="text-[#25252A] text-sm sm:text-base lg:text-[15px] font-normal leading-relaxed lg:leading-[22px] max-w-[1208px]">
+              Clubs and activities give students the freedom to explore
+              interests, practise new skills, and take on responsibility. The
+              programme evolves with student interests and school capacity,
+              spanning academic enrichment, English, technology, business,
+              sport, creative arts, mentoring, and service. Activities take
+              place after the school day and are structured to support balance,
+              discipline, teamwork, and personal growth.
+            </p>
+          </motion.div>
+
+          {/* 3-Column Grid of Clubs (#917:2275) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10 md:mt-12">
+            {studentClubs.map((club, idx) => (
               <motion.div
-                key={club.name}
-                whileHover={{ y: -10 }}
-                className="bg-white p-10 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl hover:border-[#182B70]/10 transition-all text-center"
+                key={club.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: (idx % 3) * 0.08 }}
+                className="flex flex-col group"
               >
-                <div className="w-16 h-16 bg-[#182B70]/5 text-[#182B70] rounded-2xl flex items-center justify-center mx-auto mb-8">
-                  <club.icon size={32} />
+                <div className="w-full aspect-[380/240] max-h-[240px] rounded-[24px] overflow-hidden bg-gray-200 shadow-sm">
+                  <img
+                    src={clubDefaultImg}
+                    alt={club.title}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
                 </div>
-                <h4 className="text-xl font-bold text-[#182B70] mb-4">
-                  {club.name}
-                </h4>
-                <p className="text-gray-500 text-sm leading-relaxed">
-                  {club.desc}
-                </p>
+                <div className="pt-6 flex flex-col gap-2">
+                  <div className="flex items-start gap-4">
+                    <img
+                      src={club.icon}
+                      alt=""
+                      className="w-8 h-8 shrink-0 mt-0.5 object-contain"
+                    />
+                    <h3 className="text-[#25252A] text-lg sm:text-xl lg:text-[20px] font-bold leading-snug lg:leading-[25px]">
+                      {club.title}
+                    </h3>
+                  </div>
+                  <p className="text-[#66666E] text-sm sm:text-base lg:text-[15px] font-normal leading-relaxed lg:leading-[19px]">
+                    {club.desc}
+                  </p>
+                </div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Community Engagement */}
-      <section className="py-24 px-6 bg-[#182B70] text-white">
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 items-center">
-          <div className="flex-1 order-2 lg:order-1">
-            <div className="grid grid-cols-2 gap-4">
-              <ImageWithFallback
-                src="https://images.unsplash.com/photo-1724949286531-aad1be889342?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBwcml2YXRlJTIwc2Nob29sJTIwY2FtcHVzJTIwYXJjaGl0ZWN0dXJlfGVufDF8fHx8MTc3MDM2NTAyN3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-                alt="Community 1"
-                className="rounded-2xl aspect-square object-cover"
-              />
-              <ImageWithFallback
-                src="https://images.unsplash.com/photo-1740153204804-200310378f2f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBhc2lhbiUyMGVkdWNhdG9yJTIwaW4lMjBvZmZpY2UlMjBwb3J0cmFpdHxlbnwxfHx8fDE3NzAzNjUwMjh8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-                alt="Community 2"
-                className="rounded-2xl aspect-square object-cover mt-8"
-              />
-            </div>
-          </div>
-          <div className="flex-1 order-1 lg:order-2 space-y-8">
-            <h2 className="text-4xl font-bold">
-              Community & Parent Engagement
-            </h2>
-            <p className="text-white/70 text-lg leading-relaxed">
-              We believe education is a partnership between the school, parents,
-              and the local community. Through regular meetings, volunteer
-              opportunities, and social initiatives, we foster a strong support
-              network for our students.
-            </p>
-            <div className="space-y-4">
-              <div className="flex gap-4 items-start">
-                <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center shrink-0">
-                  <Users className="text-white" size={20} />
-                </div>
-                <div>
-                  <h4 className="font-bold">Parent-Teacher Association</h4>
-                  <p className="text-white/60 text-sm">
-                    Active collaboration on student welfare and school
-                    improvements.
-                  </p>
-                </div>
-              </div>
-              <div className="flex gap-4 items-start">
-                <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center shrink-0">
-                  <Heart className="text-white" size={20} />
-                </div>
-                <div>
-                  <h4 className="font-bold">Social Responsibility</h4>
-                  <p className="text-white/60 text-sm">
-                    Students participate in local community service and
-                    environmental projects.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* 5. College & Career Readiness (#918:2569) */}
+      <section className="w-full max-w-[1512px] mx-auto px-6 md:px-12 lg:px-[152px] py-16 md:py-24 pb-24 lg:pb-32">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="space-y-4"
+        >
+          <h2 className="text-[#182B70] text-3xl sm:text-4xl lg:text-[32px] font-bold leading-tight lg:leading-[40px] tracking-tight mb-8">
+            College & Career Readiness
+          </h2>
+        </motion.div>
 
-      {/* Gallery Highlight Slider Placeholder */}
-      <section className="py-24 px-6 bg-white overflow-hidden">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex justify-between items-end mb-12">
-            <div>
-              <h2 className="text-[#182B70] text-4xl font-bold mb-4">
-                Campus Highlights
-              </h2>
-              <p className="text-gray-500 text-lg">
-                Moments that define our college experience.
+        <div className="space-y-6">
+          {readinessItems.map((item, idx) => (
+            <motion.div
+              key={item.title}
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: idx * 0.05 }}
+              className="space-y-2 max-w-[1208px]"
+            >
+              <h3 className="text-[#25252A] text-lg sm:text-xl lg:text-[20px] font-bold leading-snug lg:leading-[25px]">
+                {item.title}
+              </h3>
+              <p className="text-[#25252A] text-sm sm:text-base lg:text-[15px] font-normal leading-relaxed lg:leading-[19px]">
+                {item.desc}
               </p>
-            </div>
-            <div className="flex gap-4">
-              <button className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center hover:bg-[#182B70] hover:text-white transition-all">
-                ←
-              </button>
-              <button className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center hover:bg-[#182B70] hover:text-white transition-all">
-                →
-              </button>
-            </div>
-          </div>
-          <div className="flex gap-8">
-            {[1, 2, 3].map((i) => (
-              <div
-                key={i}
-                className="min-w-[400px] aspect-[16/10] rounded-3xl overflow-hidden relative group"
-              >
-                <ImageWithFallback
-                  src={
-                    i === 1
-                      ? "https://images.unsplash.com/photo-1724949286531-aad1be889342?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBwcml2YXRlJTIwc2Nob29sJTIwY2FtcHVzJTIwYXJjaGl0ZWN0dXJlfGVufDF8fHx8MTc3MDM2NTAyN3ww"
-                      : i === 2
-                        ? "https://images.unsplash.com/photo-1563299967-5208dc3f5d19?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzY2hvb2wlMjBiYXNrZXRiYWxsJTIwY291cnQlMjBjYW1wdXN8ZW58MXx8fHwxNzcwMzY1MDI4fDA"
-                        : "https://images.unsplash.com/photo-1759092912891-9f52486bb059?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBzY2llbmNlJTIwbGFib3JhdG9yeSUyMHNjaG9vbHxlbnwxfHx8fDE3NzAzNjUwMjh8MA"
-                  }
-                  alt={`Gallery ${i}`}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all flex items-end p-8">
-                  <div className="text-white">
-                    <Camera size={24} className="mb-4" />
-                    <div className="font-bold text-xl">
-                      {i === 1
-                        ? "Campus Architecture"
-                        : i === 2
-                          ? "Sports Day 2026"
-                          : "Innovation Fair"}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+            </motion.div>
+          ))}
         </div>
       </section>
     </div>
