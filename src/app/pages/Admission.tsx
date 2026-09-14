@@ -1,298 +1,436 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
-import { ImageWithFallback } from "../components/figma/ImageWithFallback";
-import {
-  ChevronDown,
-  CheckCircle2,
-  FileText,
-  Calendar,
-  Users,
-  GraduationCap,
-  ArrowRight,
-} from "lucide-react";
+import { ChevronRight } from "lucide-react";
+
+// Admission SVG Icons (Figma Node 816:581)
+import iconGraduate from "../../assets/admission/icon-graduate.svg";
+import iconUsers from "../../assets/admission/icon-users.svg";
+import iconBook from "../../assets/admission/icon-book.svg";
+import iconHeadGear from "../../assets/admission/icon-head-gear.svg";
+import iconCardChecklist from "../../assets/admission/icon-card-checklist.svg";
+import iconFamily from "../../assets/admission/icon-family-restroom.svg";
+import iconQuestion from "../../assets/admission/icon-question-circle.svg";
+
+function cn(...inputs: any[]) {
+  return inputs.filter(Boolean).join(" ");
+}
+
+const whyChooseItems = [
+  {
+    icon: iconGraduate,
+    title: "A Fully Funded, High-Quality Education",
+    desc: "Selected students receive full tuition scholarships and access to an ambitious academic programme designed to prepare them for further education and meaningful careers.",
+  },
+  {
+    icon: iconUsers,
+    title: "A Student-Centred Campus",
+    desc: "Students are known, supported, and encouraged. The school pays close attention to academic progress, wellbeing, confidence, character, and leadership.",
+  },
+  {
+    icon: iconBook,
+    title: "A Rigorous Dual Curriculum",
+    desc: "The Cambodian National Curriculum and International programmes provide both strong national foundations and an international academic perspective.",
+  },
+  {
+    icon: iconHeadGear,
+    title: "Growth Beyond Academics",
+    desc: "Clubs, mentoring, service, sport, creative activities, and career guidance help students discover their strengths and develop the habits needed for adult life.",
+  },
+];
+
+const applicationSteps = [
+  {
+    number: 1,
+    title: "Complete the application form",
+    desc: "Submit either a paper form or the online form available through the application link or QR code.",
+  },
+  {
+    number: 2,
+    title: "Prepare the required documents",
+    desc: "birth certificate (original or a copy certified by the commune chief or district governor); four recent 4 × 6 cm photographs with a blue background and no glasses; residence book; copies of each parent’s identification card; and family record book.",
+  },
+  {
+    number: 3,
+    title: "Submit the complete application",
+    desc: "Submit the complete application before the deadline. Incomplete applications may not be considered.",
+  },
+  {
+    number: 4,
+    title: "Attend an interview if invited",
+    desc: "Attend an interview if invited. Interviews may take place while applications are still open.",
+  },
+  {
+    number: 5,
+    title: "Receive the admissions decision",
+    desc: "Receive the admissions decision on the published release date.",
+  },
+];
+
+const timelineMilestones = [
+  { date: "1 April", milestone: "Applications open" },
+  { date: "15 May", milestone: "Applications close" },
+  { date: "April-May", milestone: "Interviews take place on a rolling basis" },
+  { date: "31 July", milestone: "Admissions decisions released" },
+];
+
+const scholarshipItems = [
+  {
+    icon: iconGraduate,
+    title: "A 100% Tuition Scholarship for Every Selected Student",
+    desc: "CCC believes that financial circumstances should not prevent a talented student from receiving an excellent education. All selected students receive a scholarship that covers 100% of tuition fees, along with academic support and full access to the school’s learning facilities and resources.",
+  },
+  {
+    icon: iconCardChecklist,
+    title: "Selection Criteria",
+    desc: "Scholarships are awarded with consideration for the applicant’s geographic and family background, academic potential, motivation, and commitment to learning.",
+  },
+  {
+    icon: iconFamily,
+    title: "Family Contributions",
+    desc: "Families share responsibility for selected day-to-day costs, including study materials, books, meals, and school uniforms. The school should provide families with clear, current information about these costs before enrolment.",
+  },
+];
 
 const faqData = [
   {
-    q: "What are the criteria for the 100% scholarship?",
-    a: "The 100% scholarship is awarded based on academic merit (top 5% in entrance exam), socioeconomic background, and leadership potential. We prioritize talented students from underprivileged backgrounds.",
+    q: "Who can apply CCC?",
+    a: "Eligible Grade 9 students from public schools in Santuk District who intend to continue in the science track in Grade 10 may apply. The school should publish any additional eligibility rules for each admissions cycle.",
   },
   {
-    q: "How do I apply for admission?",
-    a: "Applications can be submitted online through our portal or in person at our campus. You'll need to provide academic transcripts, a personal statement, and letters of recommendation.",
+    q: "Does every admitted student receive a scholarship?",
+    a: "All selected students receive a scholarship that covers 100% of tuition fees, along with academic support and full access to the school’s learning facilities and resources.",
   },
   {
-    q: "Is there an entrance exam?",
-    a: "Yes, all prospective students must take our comprehensive entrance exam which tests Mathematics, English, and Logic/Aptitude.",
+    q: "What costs are families responsible for?",
+    a: "Families are currently expected to contribute toward study materials, books, meals, and school uniforms. Applicants should consult the latest admissions information for exact costs.",
   },
   {
-    q: "Can parents visit the campus before applying?",
-    a: "Absolutely! We hold Open House events every month. You can also schedule a private tour with our admissions team.",
+    q: "What curriculum does CCC offer?",
+    a: "The Cambodian National Curriculum and International programmes provide both strong national foundations and an international academic perspective.",
+  },
+  {
+    q: "How do I apply?",
+    a: "Submit either a paper form or the online form available through the application link or QR code before the published deadline.",
+  },
+  {
+    q: "When will I receive a decision?",
+    a: "Receive the admissions decision on the published release date (indicatively 31 July) following the evaluation and interview stages.",
+  },
+  {
+    q: "Where can I ask for help?",
+    a: "Applicants and families can contact the school admissions office or visit the campus for guidance, paper application forms, or questions regarding the admissions process.",
   },
 ];
 
 export function Admission() {
-  const [openFaq, setOpenFaq] = useState<number | null>(0);
+  // Matches Figma #833:875 where item 2 ("What costs are families responsible for?") is expanded by default
+  const [openFaq, setOpenFaq] = useState<number | null>(2);
 
   return (
-    <div className="pt-24 flex flex-col">
-      {/* Header */}
-      <section className="bg-[#182B70] text-white py-20 px-6">
-        <div className="max-w-7xl mx-auto">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-6xl font-bold mb-6"
+    <div className="flex flex-col font-sora bg-white text-[#25252A] overflow-hidden pt-20 md:pt-24">
+      {/* 1. Breadcrumbs (#816:690) */}
+      <section className="w-full max-w-[1512px] mx-auto px-6 md:px-12 lg:px-[152px] pt-8 pb-0">
+        <nav
+          aria-label="Breadcrumb"
+          className="flex items-center gap-1 text-[12px] leading-[15px]"
+        >
+          <Link
+            to="/home"
+            className="text-[#66666E] font-normal hover:text-[#182B70] transition-colors"
           >
-            Admissions
-          </motion.h1>
-          <p className="text-white/80 text-xl max-w-3xl leading-relaxed">
-            Join a community of excellence. Discover your potential at Chea
-            Chanto College.
+            Home
+          </Link>
+          <ChevronRight size={14} className="text-[#66666E] shrink-0" />
+          <span className="text-[#182B70] font-bold">Admission</span>
+        </nav>
+      </section>
+
+      {/* 2. Why Chea Chanto College? (#816:582) */}
+      <section className="w-full max-w-[1512px] mx-auto px-6 md:px-12 lg:px-[152px] pt-6 pb-0">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="space-y-4"
+        >
+          <h1 className="text-[#182B70] text-3xl sm:text-4xl lg:text-[32px] font-bold leading-tight lg:leading-[40px] tracking-tight">
+            Why Chea Chanto College?
+          </h1>
+          <p className="text-[#25252A] text-sm sm:text-base lg:text-[15px] font-normal leading-relaxed lg:leading-[19px] max-w-[1208px]">
+            Talent should never be limited by circumstance. CCC gives promising
+            students from underserved communities access to a fully funded
+            education that combines academic challenge, global perspective,
+            personal growth, and practical preparation for the future. More than
+            a school, CCC is a community that sees potential, nurtures it, and
+            expects students to use it with purpose.
           </p>
-        </div>
-      </section>
+        </motion.div>
 
-      {/* Why Chea Chanto? */}
-      <section className="py-24 px-6 bg-white">
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 items-center">
-          <div className="flex-1 space-y-8">
-            <h2 className="text-[#182B70] text-4xl font-bold">
-              Why Choose Us?
-            </h2>
-            <p className="text-gray-600 text-lg leading-relaxed">
-              We provide more than just an education; we provide a platform for
-              life. Our graduates are equipped with the skills, confidence, and
-              values to thrive in a rapidly changing world.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {[
-                {
-                  title: "Global Standards",
-                  desc: "Cambridge International & MoEYS curricula.",
-                },
-                {
-                  title: "Full Scholarships",
-                  desc: "100% coverage for talented students.",
-                },
-                {
-                  title: "STEM Focused",
-                  desc: "Cutting-edge labs and technology.",
-                },
-                {
-                  title: "Holistic Growth",
-                  desc: "Arts, sports, and leadership programs.",
-                },
-              ].map((item) => (
-                <div key={item.title} className="flex gap-4">
-                  <div className="shrink-0">
-                    <CheckCircle2 className="text-[#182B70]" size={24} />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-[#182B70] mb-1">
-                      {item.title}
-                    </h4>
-                    <p className="text-sm text-gray-500">{item.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="flex-1">
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl aspect-[4/5]">
-              <ImageWithFallback
-                src="https://images.unsplash.com/photo-1747947901869-8a09ca01f4a0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoaWdoJTIwc2Nob29sJTIwc3R1ZGVudHMlMjBsYXVnaGluZyUyMGluJTIwaGFsbHdheXxlbnwxfHx8fDE3NzAzNjUwMjd8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-                alt="Happy students"
-                className="w-full h-full object-cover"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Application Process */}
-      <section className="py-24 px-6 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-[#182B70] text-4xl font-bold mb-4">
-              Application Journey
-            </h2>
-            <p className="text-gray-500 text-lg">
-              Four simple steps to joining our college.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
-            <div className="absolute top-1/2 left-0 w-full h-0.5 bg-[#182B70]/10 -translate-y-1/2 hidden md:block" />
-            {[
-              {
-                step: 1,
-                title: "Inquiry",
-                desc: "Connect with us via our website or campus visit.",
-                icon: Users,
-              },
-              {
-                step: 2,
-                title: "Application",
-                desc: "Submit your online form and required documents.",
-                icon: FileText,
-              },
-              {
-                step: 3,
-                title: "Assessment",
-                desc: "Attend the entrance exam and personal interview.",
-                icon: Calendar,
-              },
-              {
-                step: 4,
-                title: "Enrollment",
-                desc: "Accept your offer and join the orientation.",
-                icon: GraduationCap,
-              },
-            ].map((item, idx) => (
-              <div
-                key={item.title}
-                className="relative z-10 bg-white p-8 rounded-2xl border border-gray-100 text-center shadow-sm hover:shadow-md transition-shadow"
-              >
-                <div className="w-12 h-12 bg-[#182B70] text-white rounded-full flex items-center justify-center mx-auto mb-6 font-bold text-lg">
-                  <item.icon size={24} />
-                </div>
-                <div className="text-[#182B70]/50 font-bold mb-2 uppercase tracking-widest text-xs">
-                  Step {item.step}
-                </div>
-                <h4 className="text-xl font-bold text-[#182B70] mb-4">
+        {/* 4 List items (#816:813) */}
+        <div className="mt-8 space-y-8">
+          {whyChooseItems.map((item, idx) => (
+            <motion.div
+              key={item.title}
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: idx * 0.08 }}
+              className="space-y-4 pr-0 lg:pr-12"
+            >
+              <div className="flex items-center gap-2.5">
+                <img
+                  src={item.icon}
+                  alt=""
+                  className="w-8 h-8 shrink-0 object-contain"
+                />
+                <h2 className="text-[#25252A] text-lg sm:text-xl lg:text-[20px] font-bold leading-snug lg:leading-[25px]">
                   {item.title}
-                </h4>
-                <p className="text-gray-500 text-sm">{item.desc}</p>
+                </h2>
               </div>
-            ))}
-          </div>
+              <p className="text-[#25252A] text-sm sm:text-base lg:text-[15px] font-normal leading-relaxed lg:leading-[19px]">
+                {item.desc}
+              </p>
+            </motion.div>
+          ))}
         </div>
       </section>
 
-      {/* Scholarship Section */}
-      <section className="py-24 px-6 bg-white overflow-hidden">
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16">
-          <div className="flex-1 order-2 lg:order-1">
-            <div className="relative">
-              <ImageWithFallback
-                src="https://images.unsplash.com/photo-1760062744828-64801c56a039?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkaXZlcnNlJTIwc3R1ZGVudHMlMjBzdHVkeWluZyUyMGluJTIwbW9kZXJuJTIwbGlicmFyeXxlbnwxfHx8fDE3NzAzNjUwMjd8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-                alt="Scholarship student"
-                className="rounded-3xl shadow-2xl w-full aspect-video object-cover"
-              />
-              <div className="absolute top-10 -left-10 bg-[#182B70] text-white p-10 rounded-3xl shadow-2xl">
-                <div className="text-5xl font-bold mb-2">100%</div>
-                <div className="font-medium uppercase tracking-widest text-sm opacity-80">
-                  Full Scholarships Available
+      {/* 3. Application Process (#816:610) */}
+      <section className="w-full max-w-[1512px] mx-auto px-6 md:px-12 lg:px-[152px] pt-24 lg:pt-32 pb-0">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="space-y-4"
+        >
+          <h2 className="text-[#182B70] text-3xl sm:text-4xl lg:text-[32px] font-bold leading-tight lg:leading-[40px] tracking-tight">
+            Application Process
+          </h2>
+          <p className="text-[#25252A] text-sm sm:text-base lg:text-[15px] font-normal leading-relaxed lg:leading-[19px] max-w-[1208px]">
+            Applications are open to eligible Grade 9 students in Santuk
+            District who plan to continue in the science track in Grade 10.
+            Students and families can follow the steps below.
+          </p>
+        </motion.div>
+
+        {/* 5 Steps (#816:612) */}
+        <div className="mt-8 space-y-6">
+          {applicationSteps.map((step, idx) => (
+            <motion.div
+              key={step.number}
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: idx * 0.06 }}
+              className="space-y-2"
+            >
+              <div className="flex items-center gap-4">
+                <div className="w-8 h-8 rounded-full bg-[#25252A] text-white flex items-center justify-center font-bold text-[15px] leading-none shrink-0">
+                  {step.number}
                 </div>
+                <h3 className="text-[#25252A] text-lg sm:text-xl lg:text-[20px] font-bold leading-snug lg:leading-[25px]">
+                  {step.title}
+                </h3>
               </div>
-            </div>
+              <p className="text-[#25252A] text-sm sm:text-base lg:text-[15px] font-normal leading-relaxed lg:leading-[19px]">
+                {step.desc}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Indicative Application Timeline Table (#821:843) */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="mt-6 space-y-4"
+        >
+          <h3 className="text-[#25252A] text-lg sm:text-xl lg:text-[20px] font-bold leading-snug lg:leading-[25px]">
+            Indicative Application Timeline
+          </h3>
+
+          <div className="w-full rounded-2xl border border-[#D8D8DA] overflow-hidden">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="bg-[#25252A] text-white">
+                  <th className="py-4 px-6 font-normal text-sm md:text-[15px] leading-[19px] w-1/2">
+                    Date
+                  </th>
+                  <th className="py-4 px-6 font-normal text-sm md:text-[15px] leading-[19px] w-1/2">
+                    Milestone
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[#D8D8DA] bg-white">
+                {timelineMilestones.map((item) => (
+                  <tr
+                    key={item.milestone}
+                    className="hover:bg-gray-50/50 transition-colors"
+                  >
+                    <td className="py-4 px-6 text-sm md:text-[15px] leading-[19px] text-[#25252A]">
+                      {item.date}
+                    </td>
+                    <td className="py-4 px-6 text-sm md:text-[15px] leading-[19px] text-[#25252A]">
+                      {item.milestone}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-          <div className="flex-1 order-1 lg:order-2 space-y-8">
-            <h2 className="text-[#182B70] text-4xl font-bold leading-tight">
-              We Believe in Talent, Regardless of Background
-            </h2>
-            <p className="text-gray-600 text-lg">
-              Chea Chanto College provides 100% scholarships to underprivileged
-              students who show exceptional academic talent and leadership
-              potential. This covers tuition, books, and uniforms.
-            </p>
-            <div className="space-y-4">
-              <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl">
-                <div className="w-2 h-2 rounded-full bg-[#182B70]" />
-                <span className="font-bold text-[#182B70]">
-                  Academic Excellence Criteria
-                </span>
-              </div>
-              <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl">
-                <div className="w-2 h-2 rounded-full bg-[#182B70]" />
-                <span className="font-bold text-[#182B70]">
-                  Socioeconomic Support Documentation
-                </span>
-              </div>
-              <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl">
-                <div className="w-2 h-2 rounded-full bg-[#182B70]" />
-                <span className="font-bold text-[#182B70]">
-                  Community Leadership Proof
-                </span>
-              </div>
-            </div>
-            <button className="bg-[#182B70] text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-blue-900 transition-all flex items-center gap-2">
-              Apply for Scholarship <ArrowRight size={20} />
-            </button>
+
+          {/* Timeline Note (#821:928) */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-2 pt-1 text-sm md:text-[15px] leading-[19px]">
+            <span className="font-bold text-[#DC2626] shrink-0">
+              TIMELINE NOTE :
+            </span>
+            <span className="text-[#25252A]">
+              Dates may change from year to year. Applicants should check this
+              page or contact the school for the current admissions schedule.
+            </span>
           </div>
+        </motion.div>
+
+        {/* Apply Now Button (#821:937) */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4 }}
+          className="pt-8"
+        >
+          <a
+            href="#apply"
+            className="inline-flex items-center justify-center gap-2 bg-[#182B70] text-white px-6 py-3 rounded-full text-base font-normal leading-[20px] hover:bg-[#122055] transition-colors shadow-sm"
+          >
+            <span>Apply Now</span>
+            <ChevronRight size={20} className="text-white" />
+          </a>
+        </motion.div>
+      </section>
+
+      {/* 4. Scholarships (#825:1594) */}
+      <section className="w-full max-w-[1512px] mx-auto px-6 md:px-12 lg:px-[152px] pt-24 lg:pt-32 pb-0">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="space-y-4"
+        >
+          <h2 className="text-[#182B70] text-3xl sm:text-4xl lg:text-[32px] font-bold leading-tight lg:leading-[40px] tracking-tight">
+            Scholarships
+          </h2>
+        </motion.div>
+
+        {/* 3 List items (#825:1598) */}
+        <div className="mt-4 md:mt-6 space-y-8">
+          {scholarshipItems.map((item, idx) => (
+            <motion.div
+              key={item.title}
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: idx * 0.08 }}
+              className="space-y-4 pr-0 lg:pr-12"
+            >
+              <div className="flex items-center gap-2.5">
+                <img
+                  src={item.icon}
+                  alt=""
+                  className="w-8 h-8 shrink-0 object-contain"
+                />
+                <h3 className="text-[#25252A] text-lg sm:text-xl lg:text-[20px] font-bold leading-snug lg:leading-[25px]">
+                  {item.title}
+                </h3>
+              </div>
+              <p className="text-[#25252A] text-sm sm:text-base lg:text-[15px] font-normal leading-relaxed lg:leading-[19px]">
+                {item.desc}
+              </p>
+            </motion.div>
+          ))}
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <section className="py-24 px-6 bg-gray-50">
-        <div className="max-w-3xl mx-auto">
-          <h2 className="text-[#182B70] text-4xl font-bold text-center mb-16">
+      {/* 5. Frequently Asked Questions (#829:709) */}
+      <section className="w-full max-w-[1512px] mx-auto px-6 md:px-12 lg:px-[152px] pt-24 lg:pt-32 pb-32 md:pb-36">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="flex items-center gap-4 mb-4"
+        >
+          <h2 className="text-[#182B70] text-3xl sm:text-4xl lg:text-[32px] font-bold leading-tight lg:leading-[40px] tracking-tight">
             Frequently Asked Questions
           </h2>
-          <div className="space-y-4">
-            {faqData.map((item, i) => (
-              <div
-                key={i}
-                className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm"
-              >
-                <button
-                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  className="w-full flex items-center justify-between p-6 text-left hover:bg-gray-50 transition-colors"
-                >
-                  <span className="font-bold text-[#182B70] text-lg">
-                    {item.q}
-                  </span>
-                  <ChevronDown
-                    className={cn(
-                      "transition-transform duration-300 text-[#182B70]",
-                      openFaq === i && "rotate-180",
-                    )}
-                    size={24}
-                  />
-                </button>
-                <AnimatePresence>
-                  {openFaq === i && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      className="overflow-hidden"
-                    >
-                      <div className="p-6 pt-0 text-gray-600 border-t border-gray-50 leading-relaxed">
-                        {item.a}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+          <img
+            src={iconQuestion}
+            alt=""
+            className="w-8 h-8 shrink-0 object-contain"
+          />
+        </motion.div>
 
-      {/* Final CTA */}
-      <section className="py-24 px-6 bg-[#182B70] text-white text-center">
-        <div className="max-w-4xl mx-auto space-y-8">
-          <h2 className="text-4xl md:text-5xl font-bold italic">
-            "Your Journey to Excellence Starts Here"
-          </h2>
-          <p className="text-white/70 text-xl">
-            Download our prospectus or apply online today.
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-6 pt-4">
-            <button className="bg-white text-[#182B70] px-12 py-5 rounded-full font-bold text-lg hover:scale-105 transition-all">
-              Apply Now
-            </button>
-            <button className="bg-transparent border-2 border-white px-12 py-5 rounded-full font-bold text-lg hover:bg-white hover:text-[#182B70] transition-all">
-              Download Prospectus
-            </button>
+        {/* FAQ Accordion Card (#833:872) */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="bg-white rounded-3xl border border-[#D8D8DA] p-4 sm:p-6"
+        >
+          <div className="divide-y divide-[#D8D8DA]">
+            {faqData.map((item, i) => {
+              const isOpen = openFaq === i;
+              return (
+                <div key={item.q} className="py-2">
+                  <button
+                    onClick={() => setOpenFaq(isOpen ? null : i)}
+                    className="w-full flex items-center justify-between py-4 text-left group transition-colors"
+                    aria-expanded={isOpen}
+                  >
+                    <span
+                      className={cn(
+                        "text-sm sm:text-[15px] leading-snug lg:leading-[19px] pr-4 transition-colors font-normal",
+                        isOpen
+                          ? "text-[#182B70] font-medium"
+                          : "text-[#25252A] group-hover:text-[#182B70]",
+                      )}
+                    >
+                      {item.q}
+                    </span>
+                    <ChevronRight
+                      className={cn(
+                        "w-5 h-5 sm:w-6 sm:h-6 text-[#25252A] shrink-0 transition-transform duration-300",
+                        isOpen && "rotate-90 text-[#182B70]",
+                      )}
+                    />
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.25, ease: "easeInOut" }}
+                        className="overflow-hidden"
+                      >
+                        <div className="pb-4 pt-1 pr-6 lg:pr-12 text-[#66666E] text-sm sm:text-[15px] leading-relaxed lg:leading-[19px]">
+                          {item.a}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            })}
           </div>
-        </div>
+        </motion.div>
       </section>
     </div>
   );
-}
-
-function cn(...inputs: any[]) {
-  return inputs.filter(Boolean).join(" ");
 }
