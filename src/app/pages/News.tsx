@@ -1,195 +1,252 @@
-import React, { useState } from "react";
+import React from "react";
+import { Link } from "react-router-dom";
+import { ChevronRight } from "lucide-react";
 import { motion } from "motion/react";
-import { ImageWithFallback } from "../components/figma/ImageWithFallback";
-import { Search, Filter, Calendar, User, ArrowRight, Tag } from "lucide-react";
 
-const NEWS_POSTS = [
+// Figma Node 918:2632 Assets
+import newsBento1Img from "../../assets/news/news-bento-1.png";
+import newsBento2Img from "../../assets/news/news-bento-2.png";
+import newsCard1Img from "../../assets/news/news-card-1.png";
+import newsCard2Img from "../../assets/news/news-card-2.png";
+import newsCard3Img from "../../assets/news/news-card-3.png";
+
+export interface BentoArticle {
+  id: number;
+  date: string;
+  title: string;
+  image: string;
+  gradient: string;
+  colSpanClass: string;
+  heightClass: string;
+}
+
+export interface NewsArticle {
+  id: number;
+  tag: string;
+  date: string;
+  title: string;
+  subtitle: string;
+  image: string;
+}
+
+// Bento grid items matching Figma #922:3395
+const DEFAULT_BENTO_ARTICLES: BentoArticle[] = [
   {
     id: 1,
+    date: "06-February-2026",
     title: "Annual Science Fair Showcases Student Innovation",
-    excerpt:
-      "Our students presented groundbreaking projects ranging from sustainable energy to AI applications...",
-    date: "Feb 10, 2026",
-    author: "Admin",
-    category: "Academic",
-    image:
-      "https://images.unsplash.com/photo-1759092912891-9f52486bb059?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBzY2llbmNlJTIwbGFib3JhdG9yeSUyMHNjaG9vbHxlbnwxfHx8fDE3NzAzNjUwMjh8MA",
+    image: newsBento1Img,
+    gradient:
+      "linear-gradient(180deg, rgba(102, 102, 102, 0) 20%, rgba(0, 0, 0, 0.32) 70%)",
+    colSpanClass: "lg:col-span-2",
+    heightClass: "h-[340px] sm:h-[420px] md:h-[500px] lg:h-[640px]",
   },
   {
     id: 2,
-    title: "Varsity Basketball Team Secures Regional Championship",
-    excerpt:
-      "A thrilling final match saw our team triumph over rival schools in a display of teamwork and grit...",
-    date: "Feb 8, 2026",
-    author: "Sports Dept",
-    category: "Sports",
-    image:
-      "https://images.unsplash.com/photo-1563299967-5208dc3f5d19?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzY2hvb2wlMjBiYXNrZXRiYWxsJTIwY291cnQlMjBjYW1wdXN8ZW58MXx8fHwxNzcwMzY1MDI4fDA",
-  },
-  {
-    id: 3,
-    title: "New International Partnership for STEM Education",
-    excerpt:
-      "We are proud to announce a new collaboration with global tech giants to enhance our coding curriculum...",
-    date: "Feb 5, 2026",
-    author: "Admissions",
-    category: "Partners",
-    image:
-      "https://images.unsplash.com/photo-1724949286531-aad1be889342?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBwcml2YXRlJTIwc2Nob29sJTIwY2FtcHVzJTIwYXJjaGl0ZWN0dXJlfGVufDF8fHx8MTc3MDM2NTAyN3ww",
-  },
-  {
-    id: 4,
-    title: "Parent-Teacher Conference Highlights",
-    excerpt:
-      "A productive session focused on student well-being and the introduction of our new digital portal...",
-    date: "Feb 2, 2026",
-    author: "Staff",
-    category: "Community",
-    image:
-      "https://images.unsplash.com/photo-1740153204804-200310378f2f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBhc2lhbiUyMGVkdWNhdG9yJTIwaW4lMjBvZmZpY2UlMjBwb3J0cmFpdHxlbnwxfHx8fDE3NzAzNjUwMjh8MA",
+    date: "06-February-2026",
+    title: "Annual Science Fair Showcases Student Innovation",
+    image: newsBento2Img,
+    gradient:
+      "linear-gradient(180deg, rgba(102, 102, 102, 0) 20%, rgba(0, 0, 0, 0.32) 66%)",
+    colSpanClass: "lg:col-span-1",
+    heightClass: "h-[300px] sm:h-[360px] md:h-[440px] lg:h-[640px]",
   },
 ];
 
-export function News() {
-  const [activeCategory, setActiveCategory] = useState("All");
-  const [searchQuery, setSearchQuery] = useState("");
+// 6 Cards matching Figma #918:2955
+const DEFAULT_NEWS_ARTICLES: NewsArticle[] = [
+  {
+    id: 1,
+    tag: "Campus Life",
+    date: "06-February-2026",
+    title: "Annual Science Fair Showcases Student Innovation",
+    subtitle:
+      "Our students continue to excel in various fields, demonstrating the core values and leadership skills fostere…",
+    image: newsCard1Img,
+  },
+  {
+    id: 2,
+    tag: "Sports Event",
+    date: "12-March-2026",
+    title:
+      "Intercollegiate Championship Brings Together Teams from Across the Region",
+    subtitle:
+      "Athletes displayed remarkable talent and dedication, highlighting the spirit of competition and camaraderie.",
+    image: newsCard2Img,
+  },
+  {
+    id: 3,
+    tag: "Art Exhibit",
+    date: "20-April-2026",
+    title: "Student Artists Showcase Their Work at the Annual Art Gala",
+    subtitle:
+      "The event celebrated creativity, featuring diverse artworks that reflect a variety of perspectives and techniques.",
+    image: newsCard3Img,
+  },
+  {
+    id: 4,
+    tag: "Guest Lecture",
+    date: "15-May-2026",
+    title: "Renowned Author Shares Insights on Modern Literature",
+    subtitle:
+      "Attendees engaged in a thought-provoking discussion about storytelling and its impact on society.",
+    image: newsCard1Img,
+  },
+  {
+    id: 5,
+    tag: "Career Fair",
+    date: "22-June-2026",
+    title:
+      "Students Connect with Leading Companies for Internship Opportunities",
+    subtitle:
+      "The fair provided valuable networking opportunities, helping students kickstart their professional journeys.",
+    image: newsCard2Img,
+  },
+  {
+    id: 6,
+    tag: "Cultural Festival",
+    date: "10-July-2026",
+    title: "Celebrating Diversity through Food, Music, and Dance",
+    subtitle:
+      "The festival highlighted different cultures within our campus, fostering understanding and appreciation among students.",
+    image: newsCard3Img,
+  },
+];
 
-  const filteredPosts = NEWS_POSTS.filter((post) => {
-    const matchesCategory =
-      activeCategory === "All" || post.category === activeCategory;
-    const matchesSearch = post.title
-      .toLowerCase()
-      .includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
+export interface NewsProps {
+  bentoArticles?: BentoArticle[];
+  articles?: NewsArticle[];
+}
 
+export function News({
+  bentoArticles = DEFAULT_BENTO_ARTICLES,
+  articles = DEFAULT_NEWS_ARTICLES,
+}: NewsProps) {
   return (
-    <div className="pt-24 flex flex-col">
-      {/* Header */}
-      <section className="bg-[#182B70] text-white py-20 px-6">
-        <div className="max-w-7xl mx-auto">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-6xl font-bold mb-6"
+    <div className="flex flex-col font-sora bg-white text-[#25252A] overflow-hidden pt-20 md:pt-24">
+      {/* 1. Breadcrumbs (#918:2724) */}
+      <section className="w-full max-w-[1512px] mx-auto px-6 md:px-12 lg:px-[152px] pt-8 pb-0">
+        <nav
+          aria-label="Breadcrumb"
+          className="flex items-center gap-1 text-[12px] leading-[15px]"
+        >
+          <Link
+            to="/home"
+            className="text-[#66666E] font-normal hover:text-[#182B70] transition-colors"
           >
+            Home
+          </Link>
+          <ChevronRight size={14} className="text-[#66666E] shrink-0" />
+          <span className="text-[#182B70] font-bold">News & Events</span>
+        </nav>
+      </section>
+
+      {/* 2. Header / Title Section (#918:2634) */}
+      <section className="w-full max-w-[1512px] mx-auto px-6 md:px-12 lg:px-[152px] pt-6 pb-0">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="flex flex-col gap-4"
+        >
+          <h1 className="text-[#182B70] text-3xl sm:text-4xl lg:text-[32px] font-bold leading-tight lg:leading-[40px] tracking-tight">
             News & Events
-          </motion.h1>
-          <p className="text-white/80 text-xl max-w-3xl leading-relaxed">
-            Stay connected with the latest stories, achievements, and updates
-            from the Chea Chanto College community.
+          </h1>
+          <p className="text-[#25252A] text-sm sm:text-base lg:text-[15px] font-normal leading-relaxed lg:leading-[19px] max-w-[1208px]">
+            Stay connected with the latest announcements, student achievements,
+            school events, classroom stories, and community activities from Chea
+            Chanto College.
           </p>
+        </motion.div>
+      </section>
+
+      {/* 3. Bento Grid (#922:3395) */}
+      <section className="w-full max-w-[1512px] mx-auto px-6 md:px-12 lg:px-[152px] pt-8 pb-0">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 w-full max-w-[1208px]">
+          {bentoArticles.map((bento, idx) => (
+            <motion.div
+              key={bento.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: idx * 0.1 }}
+              className={`group relative ${bento.colSpanClass} ${bento.heightClass} rounded-[24px] overflow-hidden cursor-pointer shadow-sm hover:shadow-md transition-shadow`}
+            >
+              {/* Background Image */}
+              <img
+                src={bento.image}
+                alt={bento.title}
+                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              {/* Linear Gradient Scrim */}
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{ background: bento.gradient }}
+              />
+              {/* Overlay Content (#922:3401 / #922:3397) */}
+              <div className="absolute inset-x-0 bottom-0 p-6 flex flex-col justify-end gap-1 z-10">
+                <span className="text-[11px] font-normal text-[#EEF0F7]/80 leading-none">
+                  {bento.date}
+                </span>
+                <h2 className="text-white text-lg sm:text-xl lg:text-[20px] font-bold leading-snug drop-shadow-sm">
+                  {bento.title}
+                </h2>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </section>
 
-      {/* Main Content */}
-      <section className="py-24 px-6 bg-white">
-        <div className="max-w-7xl mx-auto">
-          {/* Filters */}
-          <div className="flex flex-col md:flex-row justify-between items-center mb-16 gap-8">
-            <div className="flex flex-wrap gap-4">
-              {["All", "Academic", "Sports", "Partners", "Community"].map(
-                (cat) => (
-                  <button
-                    key={cat}
-                    onClick={() => setActiveCategory(cat)}
-                    className={cn(
-                      "px-6 py-2 rounded-full font-bold text-sm transition-all",
-                      activeCategory === cat
-                        ? "bg-[#182B70] text-white"
-                        : "bg-gray-100 text-[#182B70] hover:bg-gray-200",
-                    )}
-                  >
-                    {cat}
-                  </button>
-                ),
-              )}
-            </div>
-            <div className="relative w-full md:w-96">
-              <input
-                type="text"
-                placeholder="Search news..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#182B70]/20 focus:bg-white transition-all"
-              />
-              <Search
-                className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
-                size={20}
-              />
-            </div>
-          </div>
+      {/* 4. News Cards Grid (#918:2955) */}
+      <section className="w-full max-w-[1512px] mx-auto px-6 md:px-12 lg:px-[152px] pt-8 pb-20 lg:pb-24">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-[1208px]">
+          {articles.map((article, idx) => (
+            <motion.article
+              key={article.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: idx * 0.05 }}
+              className="group flex flex-col bg-white border border-[#D8D8DA] rounded-[24px] overflow-hidden pb-6 gap-6 hover:shadow-lg transition-all duration-300 cursor-pointer"
+            >
+              {/* Top Image Frame (#792:194) */}
+              <div className="relative w-full h-[230px] overflow-hidden bg-gray-100">
+                <img
+                  src={article.image}
+                  alt={article.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                {/* Gradient Overlay (#792:197) */}
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    background:
+                      "linear-gradient(0deg, rgba(0, 0, 0, 0.36) 21%, rgba(102, 102, 102, 0.24) 66%)",
+                  }}
+                />
+                {/* Category Tag (#795:1084) */}
+                <span className="absolute top-4 left-4 bg-[#AFD2FA] text-[#66666E] text-[11px] font-normal px-4 py-2 rounded-[16px] leading-none">
+                  {article.tag}
+                </span>
+              </div>
 
-          {/* Post Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            {filteredPosts.map((post, idx) => (
-              <motion.article
-                key={post.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.1 }}
-                className="group cursor-pointer"
-              >
-                <div className="relative aspect-video rounded-3xl overflow-hidden mb-8 shadow-xl">
-                  <ImageWithFallback
-                    src={post.image}
-                    alt={post.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute top-6 left-6 bg-white/90 backdrop-blur-md text-[#182B70] px-4 py-2 rounded-xl font-bold text-xs uppercase tracking-widest shadow-lg">
-                    {post.category}
-                  </div>
+              {/* Bottom Content Frame (#792:189) */}
+              <div className="px-6 flex flex-col gap-2 flex-1">
+                <div className="flex flex-col gap-1">
+                  <span className="text-[#8A8A91] text-[11px] font-normal leading-tight">
+                    {article.date}
+                  </span>
+                  <h3 className="text-[#25252A] group-hover:text-[#182B70] text-[20px] font-bold leading-snug transition-colors line-clamp-2">
+                    {article.title}
+                  </h3>
                 </div>
-                <div className="space-y-4">
-                  <div className="flex items-center gap-6 text-gray-400 text-sm font-medium">
-                    <span className="flex items-center gap-2">
-                      <Calendar size={16} /> {post.date}
-                    </span>
-                    <span className="flex items-center gap-2">
-                      <User size={16} /> {post.author}
-                    </span>
-                  </div>
-                  <h2 className="text-[#182B70] text-2xl md:text-3xl font-bold group-hover:text-blue-700 transition-colors leading-tight">
-                    {post.title}
-                  </h2>
-                  <p className="text-gray-500 text-lg line-clamp-2 leading-relaxed">
-                    {post.excerpt}
-                  </p>
-                  <button className="flex items-center gap-2 text-[#182B70] font-bold border-b-2 border-[#182B70] pb-1 hover:border-transparent transition-all">
-                    Read Story <ArrowRight size={18} />
-                  </button>
-                </div>
-              </motion.article>
-            ))}
-          </div>
-
-          {filteredPosts.length === 0 && (
-            <div className="text-center py-20 text-gray-400 italic">
-              No news articles found matching your criteria.
-            </div>
-          )}
-
-          {/* Pagination */}
-          <div className="flex justify-center mt-20 gap-4">
-            <button className="w-12 h-12 rounded-xl bg-[#182B70] text-white font-bold">
-              1
-            </button>
-            <button className="w-12 h-12 rounded-xl bg-gray-50 text-gray-400 font-bold hover:bg-gray-100 transition-all">
-              2
-            </button>
-            <button className="w-12 h-12 rounded-xl bg-gray-50 text-gray-400 font-bold hover:bg-gray-100 transition-all">
-              3
-            </button>
-            <button className="w-12 h-12 rounded-xl bg-gray-50 text-gray-400 font-bold hover:bg-gray-100 transition-all">
-              →
-            </button>
-          </div>
+                <p className="text-[#66666E] text-[12px] font-normal leading-relaxed line-clamp-3">
+                  {article.subtitle}
+                </p>
+              </div>
+            </motion.article>
+          ))}
         </div>
       </section>
     </div>
   );
-}
-
-function cn(...inputs: any[]) {
-  return inputs.filter(Boolean).join(" ");
 }
