@@ -6,7 +6,7 @@ import { ChevronRight, Download } from "lucide-react";
 // Academic Assets (Figma Node 802-529)
 import teaching1Img from "../../assets/academic/teaching-1.png";
 import teaching2Img from "../../assets/academic/teaching-2.png";
-import facilityLearningImg from "../../assets/academic/facility-learning-spaces.png";
+import facilityLearningImg from "../../assets/academic/education-academic.png";
 import facilityLabImg from "../../assets/academic/facility-laboratories.png";
 import careerEngImg from "../../assets/academic/career-engineering.png";
 import careerTechImg from "../../assets/academic/career-tech-5dc579.png";

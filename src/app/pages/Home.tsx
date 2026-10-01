@@ -5,7 +5,8 @@ import { motion } from "motion/react";
 
 // home Assets
 import heroCampusImg from "../../assets/home/hero-campus.png";
-import educationAcademicImg from "../../assets/home/education-academic.png";
+import educationAcademicImg1 from "../../assets/home/education-academic.png";
+import educationAcademicImg2 from "../../assets/home/welcome-logo.png";
 import communityLifeImg from "../../assets/home/community-life.png";
 import newsScienceFairImg from "../../assets/home/news-science-fair.png";
 import newsInternationalDayImg from "../../assets/home/news-international-day.png";
@@ -124,7 +125,7 @@ export function Home() {
             </div>
             <div className="w-full lg:w-[500px] shrink-0">
               <img
-                src={educationAcademicImg}
+                src={educationAcademicImg1}
                 alt="Transforming Education"
                 className="w-full h-[280px] sm:h-[320px] object-cover rounded-[24px] shadow-sm"
               />
@@ -140,7 +141,7 @@ export function Home() {
             {/* Banner Image */}
             <div className="w-full h-[260px] sm:h-[320px] rounded-[24px] overflow-hidden shadow-sm">
               <img
-                src={educationAcademicImg}
+                src={educationAcademicImg2}
                 alt="A Future-Ready Education"
                 className="w-full h-full object-cover"
               />
@@ -181,7 +182,7 @@ export function Home() {
             <div className="relative w-[320px] sm:w-[480px] h-[320px] sm:h-[480px] shrink-0 mx-auto lg:mx-0">
               {/* Back Image (image 1) */}
               <img
-                src={educationAcademicImg}
+                src={educationAcademicImg1}
                 alt="Classroom activity"
                 className="absolute top-0 left-0 w-[220px] sm:w-[320px] h-[220px] sm:h-[320px] object-cover rounded-[24px] shadow-lg"
               />
