@@ -128,7 +128,7 @@ export function Admission() {
   const [openFaq, setOpenFaq] = useState<number | null>(2);
 
   return (
-    <div className="flex flex-col font-sora bg-white text-[#25252A] overflow-hidden pt-20 md:pt-24">
+    <div className="flex flex-col bg-white text-[#25252A] overflow-hidden pt-20 md:pt-24">
       {/* 1. Breadcrumbs (#816:690) */}
       <section className="w-full max-w-[1512px] mx-auto px-6 md:px-12 lg:px-[152px] pt-8 pb-0">
         <nav

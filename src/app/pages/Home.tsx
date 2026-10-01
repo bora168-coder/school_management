@@ -52,7 +52,7 @@ const NEWS_ITEMS: NewsItem[] = [
 
 export function Home() {
   return (
-    <div className="flex flex-col font-sora bg-white text-[#25252A] overflow-hidden">
+    <div className="flex flex-col bg-white text-[#25252A] overflow-hidden">
       {/* 1. Hero Section (#763:1004) */}
       <section className="relative min-h-[750px] lg:h-[800px] w-full flex flex-col justify-end overflow-hidden">
         {/* Campus Background Image */}
@@ -107,7 +107,7 @@ export function Home() {
       </section>
 
       {/* 2. Transforming Education Section (#764:1062) */}
-      <section className="bg-[#EEF0F7] py-20 lg:py-[80px]">
+      <section className="bg-brand-cream py-20 lg:py-[80px]">
         <div className="max-w-[1512px] mx-auto px-6 md:px-12 lg:px-[152px]">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16">
             <div className="flex-1 space-y-4 max-w-2xl">
@@ -259,7 +259,7 @@ export function Home() {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   {/* Category Tag (#795:1098) */}
-                  <span className="absolute top-4 left-4 bg-[#AFD2FA] text-[#66666E] text-[11px] font-medium px-4 py-1 rounded-[16px]">
+                  <span className="absolute top-4 left-4 bg-brand-light-blue text-brand-navy text-[11px] font-medium px-4 py-1 rounded-[16px]">
                     {item.tag}
                   </span>
                 </div>

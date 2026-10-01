@@ -17,7 +17,7 @@ const NAV_LINKS = [
   { name: "News & Events", href: "/news" },
 ];
 
-import logoWhite from "../../assets/e92c63db5878b0727474b90047a5609c2747e32f.png";
+import logoWhite from "../../assets/Logo/Transparent Landscape  Logo.png";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);

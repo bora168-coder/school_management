@@ -1,14 +1,44 @@
-@import url("https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&family=Sora:wght@400;500;600;700&display=swap");
+/*
+ * Brand typography (Chea Chanto College Brand Guidelines)
+ *   English body        Helvetica (Bold / Regular / Light) -> system stack, not licensed for web
+ *   English subheading  KH ABC Fancy 02 -> Anton until a commercial licence is obtained
+ *   Khmer body          Kh Battambang (LGPL, self-hosted)
+ *   Khmer heading       Khmer OS Moul -> Moul (same designer, OFL)
+ */
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Moul&display=swap");
+
+@font-face {
+  font-family: "Kh Battambang";
+  src: url("../assets/fonts/Kh-Battambang.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+1780-17FF, U+19E0-19FF, U+200B-200D, U+25CC;
+}
 
 :root {
-  --font-family: "Cabin", sans-serif;
-  --font-sora: "Sora", sans-serif;
+  /* Khmer glyphs are missing from Helvetica, so they fall through to Kh Battambang. */
+  --font-body: "Helvetica Neue", Helvetica, Arial, "Kh Battambang", sans-serif;
+  --font-subheading: "KH ABC Fancy 02", "Anton", "Arial Narrow", sans-serif;
+  --font-heading-kh: "Khmer OS Moul", "Moul", serif;
+  --font-body-kh: "Kh Battambang", "Battambang", sans-serif;
 }
 
 body {
-  font-family: var(--font-family);
+  font-family: var(--font-body);
 }
 
-.font-sora {
-  font-family: var(--font-sora);
+.font-subheading {
+  font-family: var(--font-subheading);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+.font-heading-kh {
+  font-family: var(--font-heading-kh);
+  font-weight: 400;
+}
+
+.font-body-kh {
+  font-family: var(--font-body-kh);
 }

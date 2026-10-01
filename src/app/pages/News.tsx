@@ -123,7 +123,7 @@ export function News({
   articles = DEFAULT_NEWS_ARTICLES,
 }: NewsProps) {
   return (
-    <div className="flex flex-col font-sora bg-white text-[#25252A] overflow-hidden pt-20 md:pt-24">
+    <div className="flex flex-col bg-white text-[#25252A] overflow-hidden pt-20 md:pt-24">
       {/* 1. Breadcrumbs (#918:2724) */}
       <section className="w-full max-w-[1512px] mx-auto px-6 md:px-12 lg:px-[152px] pt-8 pb-0">
         <nav
@@ -184,7 +184,7 @@ export function News({
               />
               {/* Overlay Content (#922:3401 / #922:3397) */}
               <div className="absolute inset-x-0 bottom-0 p-6 flex flex-col justify-end gap-1 z-10">
-                <span className="text-[11px] font-normal text-[#EEF0F7]/80 leading-none">
+                <span className="text-[11px] font-normal text-brand-cream/80 leading-none">
                   {bento.date}
                 </span>
                 <h2 className="text-white text-lg sm:text-xl lg:text-[20px] font-bold leading-snug drop-shadow-sm">
@@ -224,7 +224,7 @@ export function News({
                   }}
                 />
                 {/* Category Tag (#795:1084) */}
-                <span className="absolute top-4 left-4 bg-[#AFD2FA] text-[#66666E] text-[11px] font-normal px-4 py-2 rounded-[16px] leading-none">
+                <span className="absolute top-4 left-4 bg-brand-light-blue text-brand-navy text-[11px] font-normal px-4 py-2 rounded-[16px] leading-none">
                   {article.tag}
                 </span>
               </div>

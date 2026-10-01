@@ -30,7 +30,7 @@ function AppContent() {
   const isAdmin = location.pathname.startsWith("/admin");
 
   return (
-    <div className="min-h-screen bg-white font-['Cabin']">
+    <div className="min-h-screen bg-white">
       {!isAdmin && <Navbar />}
       <ScrollToTop />
       <main>

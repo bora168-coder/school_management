@@ -11,10 +11,31 @@ import studentBento3 from "../../assets/about/student-bento-3.png";
 import studentBento4 from "../../assets/about/student-bento-4.png";
 import teamEducators from "../../assets/about/team-educators.png";
 import communityPartner from "../../assets/about/community-partner.png";
+import logoStacked from "../../assets/Logo/Transparent Blue logo.png";
+
+// Emblem symbolism (Chea Chanto College Brand Guidelines, "Design rationale & symbolism")
+const EMBLEM_PARTS = [
+  {
+    title: "The Dharma Wheel",
+    body: "The emblem is enclosed within the Dharma Wheel, reflecting the Eightfold Path of Buddhism: right view, resolve, speech, action, purpose, effort, mindfulness, and concentration. It is used with deep reverence to honour H.E. Chea Chanto’s lifelong devotion to Buddhism and the values of compassion, wisdom, and ethical living he shared with others.",
+  },
+  {
+    title: "The Two Stacked Books",
+    body: "Drawn in the Kbach Khmer style, the two books symbolise the deep well of knowledge and wisdom every CCC student gains. Rooted in Cambodia’s artistic heritage, they stand for continuity, care, and respect for tradition, and for a future in which students carry knowledge forward with purpose and pride.",
+  },
+  {
+    title: "The Rising Moon",
+    body: "The moon above the books represents wisdom and steady guidance, with learning as a constant source of clarity and direction. It also draws on the Cambodia Sunrise Silver Coin, in tribute to H.E. Chea Chanto’s role in stabilising the riel as Governor of the National Bank of Cambodia from 1998 to 2023, and later as its Honorary Governor.",
+  },
+  {
+    title: "សុ.ចិ.បុ.លិ.",
+    body: "Listening, thinking, asking questions, and writing. A learner becomes effective by practising these four actions together. They deepen understanding, strengthen memory, and turn passive hearing into active learning.",
+  },
+];
 
 export function About() {
   return (
-    <div className="flex flex-col font-sora bg-white text-[#25252A] overflow-hidden pt-20 md:pt-24">
+    <div className="flex flex-col bg-white text-[#25252A] overflow-hidden pt-20 md:pt-24">
       {/* 1. Breadcrumbs (#797:2997) */}
       <section className="w-full max-w-[1512px] mx-auto px-6 md:px-12 lg:px-[152px] py-4">
         <nav
@@ -169,8 +190,67 @@ export function About() {
         </motion.div>
       </section>
 
-      {/* 5. Our Students Section & Bento Grid (#797:3182) */}
-      <section className="w-full max-w-[1512px] mx-auto px-6 md:px-12 lg:px-[152px] py-16 lg:py-24 border-t border-[#E5E7EB]">
+      {/* 5. Our Emblem — design rationale & symbolism */}
+      <section className="w-full bg-brand-cream">
+        <div className="max-w-[1512px] mx-auto px-6 md:px-12 lg:px-[152px] py-16 lg:py-24 space-y-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="space-y-4 max-w-5xl"
+          >
+            <h2 className="text-[#182B70] text-2xl sm:text-3xl lg:text-[32px] font-bold leading-snug">
+              Our Emblem
+            </h2>
+            <p className="text-[#25252A] text-base leading-relaxed font-normal">
+              The CCC emblem captures our purpose: to provide a world-class
+              education to exceptional students from underprivileged
+              backgrounds. Its composition represents the knowledge and wisdom
+              every student gains, guided by skilled and caring educators.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="lg:col-span-4 bg-white rounded-[24px] border border-[#D8D8DA] flex items-center justify-center p-10 lg:p-12"
+            >
+              <img
+                src={logoStacked}
+                alt="Chea Chanto College emblem and name"
+                className="w-full max-w-[260px] h-auto object-contain"
+              />
+            </motion.div>
+
+            <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {EMBLEM_PARTS.map((part, i) => (
+                <motion.div
+                  key={part.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: i * 0.08 }}
+                  className="bg-white rounded-[24px] border border-[#D8D8DA] p-6 space-y-3"
+                >
+                  <h3 className="text-[#182B70] text-lg font-bold leading-snug">
+                    {part.title}
+                  </h3>
+                  <p className="text-[#25252A] text-[15px] leading-relaxed font-normal">
+                    {part.body}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. Our Students Section & Bento Grid (#797:3182) */}
+      <section className="w-full max-w-[1512px] mx-auto px-6 md:px-12 lg:px-[152px] py-16 lg:py-24">
         <div className="space-y-10">
           {/* Header & Copy (#797:3184) */}
           <motion.div
@@ -252,7 +332,7 @@ export function About() {
         </div>
       </section>
 
-      {/* 6. Our Team & Our Partners Section (#797:3276) */}
+      {/* 7. Our Team & Our Partners Section (#797:3276) */}
       <section className="w-full max-w-[1512px] mx-auto px-6 md:px-12 lg:px-[152px] py-16 lg:py-24 border-t border-[#E5E7EB]">
         <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between gap-12 lg:gap-16">
           {/* Left Text Block (#797:3278) */}

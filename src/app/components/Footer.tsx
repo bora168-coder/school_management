@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin } from "lucide-react";
-import logoWhite from "../../assets/e92c63db5878b0727474b90047a5609c2747e32f.png";
+import logoWhite from "../../assets/Logo/Transparent Landscape  Logo.png";
 
 export function Footer() {
   return (
-    <footer className="bg-[#182B70] text-white font-sora pt-12 pb-8">
+    <footer className="bg-[#182B70] text-white pt-12 pb-8">
       <div className="max-w-[1512px] mx-auto px-6 md:px-12 lg:px-[152px]">
         {/* Top: Landscape Logo (#I797:711;795:1383) */}
         <div className="mb-8">

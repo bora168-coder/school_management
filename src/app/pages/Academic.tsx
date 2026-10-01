@@ -75,7 +75,7 @@ export function Academic() {
   ];
 
   return (
-    <div className="flex flex-col font-sora bg-white text-[#25252A] overflow-hidden pt-20 md:pt-24">
+    <div className="flex flex-col bg-white text-[#25252A] overflow-hidden pt-20 md:pt-24">
       {/* 1. Breadcrumbs (#802:573) */}
       <section className="w-full max-w-[1512px] mx-auto px-6 md:px-12 lg:px-[152px] pt-4 pb-2">
         <nav

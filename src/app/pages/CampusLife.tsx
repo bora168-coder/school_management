@@ -157,7 +157,7 @@ const readinessItems = [
 
 export function CampusLife() {
   return (
-    <div className="flex flex-col font-sora bg-white text-[#25252A] overflow-hidden pt-20 md:pt-24">
+    <div className="flex flex-col bg-white text-[#25252A] overflow-hidden pt-20 md:pt-24">
       {/* 1. Breadcrumbs (#833:1051) */}
       <section className="w-full max-w-[1512px] mx-auto px-6 md:px-12 lg:px-[152px] pt-4 pb-2">
         <nav
@@ -316,7 +316,7 @@ export function CampusLife() {
       </section>
 
       {/* 4. Student Activities & Clubs (#917:2271) */}
-      <section className="w-full bg-[#EEF0F7] py-16 md:py-20 mt-16 md:mt-24">
+      <section className="w-full bg-brand-cream py-16 md:py-20 mt-16 md:mt-24">
         <div className="w-full max-w-[1512px] mx-auto px-6 md:px-12 lg:px-[152px]">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

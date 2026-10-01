@@ -9,7 +9,7 @@ import {
   Image as ImageIcon,
   Send,
 } from "lucide-react";
-import emblemBlue from "../../assets/7b340a16453c67207ebf0d2aea65df6d982060fa.png";
+import emblemBlue from "../../assets/Logo/Transparent Icon.png";
 
 export function Admin() {
   const [activeTab, setActiveTab] = useState("new-post");
