@@ -125,7 +125,7 @@ export function Home() {
             </div>
             <div className="w-full lg:w-[500px] shrink-0">
               <img
-                src={educationAcademicImg1}
+                src={educationAcademicImg2}
                 alt="Transforming Education"
                 className="w-full h-[280px] sm:h-[320px] object-cover rounded-[24px] shadow-sm"
               />
@@ -139,9 +139,9 @@ export function Home() {
         <div className="max-w-[1512px] mx-auto px-6 md:px-12 lg:px-[152px]">
           <div className="space-y-8">
             {/* Banner Image */}
-            <div className="w-full h-[260px] sm:h-[320px] rounded-[24px] overflow-hidden shadow-sm">
+            <div className="w-full aspect-[1280/853] rounded-[24px] overflow-hidden shadow-sm">
               <img
-                src={educationAcademicImg2}
+                src={educationAcademicImg1}
                 alt="A Future-Ready Education"
                 className="w-full h-full object-cover"
               />

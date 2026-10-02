@@ -5,7 +5,7 @@ import { motion } from "motion/react";
 
 // Figma Node 797-2898 Assets
 import founderImg from "../../assets/about/founder-chea-chanto.png";
-import studentBento1 from "../../assets/about/student-bento-1.png";
+import studentBento1 from "../../assets/about/student_unitform.jpg";
 import studentBento2 from "../../assets/about/student-bento-2.png";
 import studentBento3 from "../../assets/about/student-bento-3.png";
 import studentBento4 from "../../assets/about/student-bento-4.png";
@@ -80,12 +80,12 @@ export function About() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="w-full lg:w-[570px] shrink-0"
+            className="w-full max-w-[360px] mx-auto lg:mx-0 shrink-0"
           >
             <img
               src={founderImg}
               alt="H.E. Chea Chanto Portrait"
-              className="w-full h-auto max-h-[450px] object-cover rounded-[14px] border-2 border-[#8A8A91] shadow-sm"
+              className="w-full h-auto aspect-[1233/2228] object-cover rounded-[14px] border-2 border-[#8A8A91] shadow-sm"
             />
           </motion.div>
 
@@ -367,10 +367,10 @@ export function About() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="w-full lg:w-[560px] flex flex-col sm:flex-row lg:relative lg:h-[420px] items-center justify-center gap-6 sm:gap-8"
+            className="w-full lg:w-[560px] flex flex-col sm:flex-row lg:relative lg:h-[240px] items-center justify-center gap-6 sm:gap-8"
           >
             {/* Card 1: Team Educators */}
-            <div className="w-[280px] sm:w-[300px] lg:w-[320px] h-[280px] sm:h-[300px] lg:h-[320px] lg:absolute lg:top-12 lg:left-0 rounded-[24px] overflow-hidden shadow-lg border-2 border-white group">
+            <div className="w-[280px] sm:w-[300px] lg:w-[320px] aspect-[2816/1536] lg:absolute lg:top-12 lg:left-0 rounded-[24px] overflow-hidden shadow-lg border-2 border-white group">
               <img
                 src={teamEducators}
                 alt="CCC Educators and Leadership Team"
@@ -379,7 +379,7 @@ export function About() {
             </div>
 
             {/* Card 2: Community Partners */}
-            <div className="w-[280px] sm:w-[300px] lg:w-[320px] h-[280px] sm:h-[300px] lg:h-[320px] lg:absolute lg:top-0 lg:right-0 rounded-[16px] overflow-hidden shadow-xl border-2 border-white group">
+            <div className="w-[280px] sm:w-[300px] lg:w-[320px] aspect-[2816/1536] lg:absolute lg:top-0 lg:right-0 rounded-[16px] overflow-hidden shadow-xl border-2 border-white group">
               <img
                 src={communityPartner}
                 alt="CCC Community and Educational Partners"

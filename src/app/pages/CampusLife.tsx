@@ -4,7 +4,15 @@ import { motion } from "motion/react";
 import { ChevronRight } from "lucide-react";
 
 // Campus Life Assets (Figma Node 833-932)
-import clubDefaultImg from "../../assets/campus-life/club-default.png";
+import groupDiscussionImg from "../../assets/campus-life/student-group-discussion.jpg";
+import readingTextbookImg from "../../assets/campus-life/girl-reading-textbook.jpg";
+import groupStudyImg from "../../assets/campus-life/group-study-with-teacher.jpg";
+import writingNotesImg from "../../assets/campus-life/boy-writing-notes.jpg";
+import listeningInClassImg from "../../assets/campus-life/students-listening-in-class.jpg";
+import studyingAtDesksImg from "../../assets/campus-life/students-studying-at-desks.jpg";
+import twoStudentsWritingImg from "../../assets/campus-life/two-students-writing.jpg";
+import takingExamImg from "../../assets/campus-life/students-taking-exam.jpg";
+import mathLessonImg from "../../assets/campus-life/math-lesson-at-whiteboard.jpg";
 
 // SVG Icons
 import iconGraduate from "../../assets/campus-life/icon-graduate.svg";
@@ -60,70 +68,59 @@ const campusHighlights = [
 // Student Activities & Clubs (#917:2275)
 const studentClubs = [
   {
+    image: groupDiscussionImg,
     icon: iconHeadGear,
     title: "Speech & Debate Club — Find your voice. Sharpen your thinking.",
-    desc: "Students practise public speaking, research, and structured argument. The club builds confidence, critical thinking, and persuasive communication, and offers a pathway for students interested in Model United Nations.",
+    desc: "Students gather in small groups to research a topic, share ideas, and test their arguments with one another. The club builds confidence, critical thinking, and persuasive communication, and offers a pathway for students interested in Model United Nations.",
   },
   {
+    image: readingTextbookImg,
     icon: iconBook,
-    title:
-      "Reading & English Conversation Club — Read widely. Speak with confidence.",
-    desc: "Students read fiction and non-fiction, build vocabulary, and discuss ideas in English. Guided discussion and presentations help them develop clear, fluent expression.",
+    title: "Reading Club — Read closely. Remember more.",
+    desc: "Students work through texts at their own pace, mark key ideas, and take careful notes as they read. These habits build vocabulary, deepen understanding, and help students become confident, independent readers.",
   },
   {
+    image: twoStudentsWritingImg,
     icon: iconBlueprintPap,
-    title: "English Music Club — Where language meets creativity and culture.",
-    desc: "Students explore music in English as a way to strengthen listening, interpret lyrics, discover new cultures, and understand how stories and ideas are expressed through sound.",
+    title: "Study Hall — Quiet focus, steady progress.",
+    desc: "After classes, students use supervised study time to complete homework, review lessons, and prepare for the next school day. A calm, focused setting helps them build discipline and good study routines.",
   },
   {
+    image: groupStudyImg,
     icon: iconBlueprintPap,
-    title: "Student Entrepreneurship Club — Where ideas become action.",
-    desc: "Students investigate local markets, ethical business, and entrepreneurship through projects, field visits, guest speakers, and group problem-solving. They learn how ideas, resources, and supply chains work in the real world.",
+    title: "Guided Group Projects — Learn together, with support.",
+    desc: "Students work in teams on research and project tasks, using laptops, worksheets, and shared materials. Teachers guide each group, ask questions, and help students plan, solve problems, and present their work.",
   },
   {
+    image: takingExamImg,
     icon: iconBlueprintPap,
-    title: "Robotics Club — Build, test, and imagine.",
-    desc: "Students explore electronics, coding, and engineering through hands-on projects using tools such as Arduino. Working in teams, they design, build, troubleshoot, and learn from each attempt.",
+    title: "Exam Preparation — Practise, review, and perform with confidence.",
+    desc: "Through practice tests and timed review sessions, students become familiar with exam formats and learn to manage their time. Regular feedback shows them where to improve before national and international examinations.",
   },
   {
-    icon: iconBlueprintPap,
-    title: "Game Design Club — From player to designer.",
-    desc: "Students look beyond gameplay to understand concept development, mechanics, storytelling, and production. They work together to design original games while building creativity, logic, and collaboration.",
-  },
-  {
-    icon: iconBlueprintPap,
-    title: "Media Club — Tell stories through photography and film.",
-    desc: "Students learn visual storytelling, from framing and composition to filming and editing. They develop technical skills and use images and film to communicate ideas with purpose.",
-  },
-  {
+    image: writingNotesImg,
     icon: iconBlueprintPap,
     title: "Creative Writing Club — Where stories come to life.",
     desc: "Students experiment with poetry, short fiction, creative nonfiction, and scripts. Prompts, workshops, and peer feedback help them strengthen craft, originality, and voice.",
   },
   {
+    image: listeningInClassImg,
     icon: iconBlueprintPap,
-    title: "Performing Arts Club — Culture, movement, and creativity on stage.",
-    desc: "Through singing, dance, and traditional Khmer performance, students build confidence, discipline, stage presence, and appreciation for the stories carried through the arts.",
+    title:
+      "English Conversation Club — Listen, respond, speak with confidence.",
+    desc: "Students listen carefully, respond to questions, and share their ideas in English in a friendly, supportive setting. Guided discussion and short presentations help them develop clear, fluent expression.",
   },
   {
+    image: mathLessonImg,
     icon: iconBlueprintPap,
-    title: "Movie Club — Watch closely. Think deeply.",
-    desc: "Students view carefully selected films from different genres and cultures, then take part in guided discussions and reflective activities that connect cinematic stories with wider ideas.",
+    title: "Maths Enrichment — Build strong problem-solving skills.",
+    desc: "In extra sessions beyond the regular timetable, teachers work through challenging problems step by step at the board. Students ask questions, try new methods, and strengthen the skills they need for advanced study.",
   },
   {
+    image: studyingAtDesksImg,
     icon: iconBlueprintPap,
-    title: "Sports Club — Teamwork, discipline, and school spirit in motion.",
-    desc: "Football, volleyball, and badminton offer students structured opportunities to stay active, improve skills, compete, and develop resilience and teamwork.",
-  },
-  {
-    icon: iconBlueprintPap,
-    title: "Tutoring Club — Knowledge grows when it is shared.",
-    desc: "Students who are strong in particular subjects support peers through structured tutoring. Tutors deepen their own understanding while developing patience, leadership, and communication.",
-  },
-  {
-    icon: iconBlueprintPap,
-    title: "Student Community Service — Responsibility and care in action.",
-    desc: "Students contribute to the school through shared responsibilities and service activities. Working together helps them develop accountability, respect, teamwork, and pride in their community.",
+    title: "Peer Tutoring — Knowledge grows when it is shared.",
+    desc: "Students who are strong in particular subjects sit with classmates to explain ideas and work through exercises together. Tutors deepen their own understanding while developing patience, leadership, and communication.",
   },
 ];
 
@@ -352,7 +349,7 @@ export function CampusLife() {
               >
                 <div className="w-full aspect-[380/240] max-h-[240px] rounded-[24px] overflow-hidden bg-gray-200 shadow-sm">
                   <img
-                    src={clubDefaultImg}
+                    src={club.image}
                     alt={club.title}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
